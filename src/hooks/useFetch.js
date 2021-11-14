@@ -11,9 +11,7 @@ const useFetch = (url) => {
     setError(false);
     HttpRequest(url)
       .then((res) => {
-        res.data.content
-          ? setData([...data, ...res.data.content])
-          : setData(res.data);
+        res.data.content ? setData([...res.data.content]) : setData(res.data);
       })
       .catch((err) => {
         setError(err);
@@ -22,7 +20,7 @@ const useFetch = (url) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [data, url]);
+  }, [url]);
   return [data, loading, error];
 };
 

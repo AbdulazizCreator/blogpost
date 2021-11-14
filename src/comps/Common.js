@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   Button,
   Form,
@@ -11,6 +12,9 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import { REFRESH_TOKEN, TOKEN } from "../constants";
+import { setCookie } from "../functions/useCookies";
+import { sendData } from "../server/common";
 const Common = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
@@ -35,10 +39,19 @@ const Common = (props) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
   const submitLogin = () => {
-    console.log(loginData);
+    sendData("auth/jwt/create/", loginData).then((res) => {
+      closeModal();
+      toast.success("Muvaffaqqiyatli yakunladingiz !");
+      setCookie(TOKEN, res.data.access);
+      setCookie(REFRESH_TOKEN, res.data.refresh);
+    });
   };
   const submitRegister = () => {
-    console.log(registerData);
+    sendData("auth/users/", registerData).then((res) => {
+      closeModal2();
+      openModal();
+      toast.success("Ro'yxatdan muvaffaqqiyatli o'tdingiz");
+    });
   };
   return (
     <div>

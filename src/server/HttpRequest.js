@@ -19,7 +19,6 @@ export const HttpRequest = (config = null) => {
     (response) => response,
     (error) => {
       let token = getCookie(TOKEN);
-      console.log(error.response);
       if (error.response) {
         if (error.response.status === 403) {
           if (!token) {
@@ -31,11 +30,11 @@ export const HttpRequest = (config = null) => {
           }
         }
         console.log(error.response.data);
-        error.response.data && toast.error(error.response.data.message);
+        error.response.data &&
+          toast.error(Object.values(error.response.data).join(" "));
       }
       throw error;
     }
   );
   return instance(config);
 };
-
