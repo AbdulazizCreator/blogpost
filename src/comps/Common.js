@@ -14,6 +14,8 @@ import {
 const Common = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
+  const [registerData, setRegisterData] = useState({});
+  const [loginData, setLoginData] = useState({});
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -25,6 +27,18 @@ const Common = (props) => {
   };
   const closeModal2 = () => {
     setIsModalOpen2(false);
+  };
+  const handleRegister = (e) => {
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+  };
+  const handleLogin = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
+  const submitLogin = () => {
+    console.log(loginData);
+  };
+  const submitRegister = () => {
+    console.log(registerData);
   };
   return (
     <div>
@@ -64,6 +78,7 @@ const Common = (props) => {
             <FormGroup>
               <Label for="exampleUsername">Username</Label>
               <Input
+                onChange={handleLogin}
                 id="exampleUsername"
                 name="username"
                 placeholder="username"
@@ -73,6 +88,7 @@ const Common = (props) => {
             <FormGroup>
               <Label for="examplePassword">Password</Label>
               <Input
+                onChange={handleLogin}
                 id="examplePassword"
                 name="password"
                 placeholder="password"
@@ -82,7 +98,7 @@ const Common = (props) => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={function noRefCheck() {}}>
+          <Button color="primary" onClick={submitLogin}>
             Login
           </Button>
           <Button onClick={closeModal}>Cancel</Button>
@@ -95,6 +111,7 @@ const Common = (props) => {
             <FormGroup>
               <Label for="exampleEmail">Email</Label>
               <Input
+                onChange={handleRegister}
                 id="exampleEmail"
                 name="email"
                 placeholder="email"
@@ -104,6 +121,7 @@ const Common = (props) => {
             <FormGroup>
               <Label for="exampleUsername">Username</Label>
               <Input
+                onChange={handleRegister}
                 id="exampleUsername"
                 name="username"
                 placeholder="username"
@@ -113,6 +131,7 @@ const Common = (props) => {
             <FormGroup>
               <Label for="examplePassword">Password</Label>
               <Input
+                onChange={handleRegister}
                 id="examplePassword"
                 name="password"
                 placeholder="password"
@@ -122,7 +141,7 @@ const Common = (props) => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={function noRefCheck() {}}>
+          <Button color="primary" onClick={submitRegister}>
             Register
           </Button>
           <Button onClick={closeModal2}>Cancel</Button>
