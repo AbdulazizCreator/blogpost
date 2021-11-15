@@ -22,3 +22,7 @@ a {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.accordion__button:before {
+    content: none !important;
+}

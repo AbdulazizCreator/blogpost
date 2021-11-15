@@ -8,7 +8,7 @@ export const HttpRequest = (config = null) => {
   let headers = {
     "X-Requested-With": "XMLHttpRequest",
     "Content-Type": "application/json; charset=utf-8",
-    Authorization: token ? `Bearer ${token}` : "",
+    Authorization: token ? `JWT ${token}` : "",
   };
   let instance = axios.create({
     baseURL: `${API_URL}`,
@@ -20,7 +20,7 @@ export const HttpRequest = (config = null) => {
     (error) => {
       let token = getCookie(TOKEN);
       if (error.response) {
-        if (error.response.status === 403) {
+        if (error.response.status === 401) {
           if (!token) {
             toast.error("Unauthorization");
           } else {
@@ -29,7 +29,7 @@ export const HttpRequest = (config = null) => {
             window.location.reload();
           }
         }
-        console.log(error.response.data);
+        console.log(error.response);
         error.response.data &&
           toast.error(Object.values(error.response.data).join(" "));
       }

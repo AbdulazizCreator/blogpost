@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -13,13 +13,14 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { REFRESH_TOKEN, TOKEN } from "../constants";
-import { setCookie } from "../functions/useCookies";
-import { sendData } from "../server/common";
+import { getCookie, setCookie, deleteCookie } from "../functions/useCookies";
+import { getData, sendData } from "../server/common";
 const Common = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [registerData, setRegisterData] = useState({});
   const [loginData, setLoginData] = useState({});
+  const [data, setData] = useState({});
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -44,6 +45,7 @@ const Common = (props) => {
       toast.success("Muvaffaqqiyatli yakunladingiz !");
       setCookie(TOKEN, res.data.access);
       setCookie(REFRESH_TOKEN, res.data.refresh);
+      window.location.reload();
     });
   };
   const submitRegister = () => {
@@ -53,6 +55,18 @@ const Common = (props) => {
       toast.success("Ro'yxatdan muvaffaqqiyatli o'tdingiz");
     });
   };
+  const signout = () => {
+    deleteCookie(TOKEN);
+    deleteCookie(REFRESH_TOKEN);
+    window.location.reload();
+  };
+  const token = getCookie(TOKEN);
+  useEffect(() => {
+    token &&
+      getData("/auth/users/me/").then((res) => {
+        setData(res.data);
+      });
+  }, [token]);
   return (
     <div>
       <header>
@@ -65,12 +79,29 @@ const Common = (props) => {
                 </Link>
               </div>
               <div>
-                <Button className="me-3" color="primary" onClick={openModal}>
-                  Login
-                </Button>
-                <Button color="primary" onClick={openModal2}>
-                  Register
-                </Button>
+                {Object.keys(data).length !== 0 ? (
+                  <div>
+                    <Button className="me-3" color="primary">
+                      Salom, {data.username}
+                    </Button>
+                    <Button color="danger" onClick={signout}>
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Button
+                      className="me-3"
+                      color="primary"
+                      onClick={openModal}
+                    >
+                      Login
+                    </Button>
+                    <Button color="primary" onClick={openModal2}>
+                      Register
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
