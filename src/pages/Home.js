@@ -16,7 +16,7 @@ const Home = () => {
             <div className="row">
               {data.map((item) => (
                 <div className="col-lg-4 col-md-6 col-12 mb-3">
-                  <Card color="warning">
+                  <Card color="warning post-card">
                     <Link to={`/post/${item.id}`}>
                       <CardImg
                         alt="Card image cap"

@@ -111,7 +111,10 @@ const Common = (props) => {
       <footer>
         <div className="container-fluid bg-warning">
           <div className="container">
-            <p className="text-center py-3 mb-0">Mady by Abdulaziz and Maruf</p>
+            <p className="text-center py-3 mb-0">
+              Made by <a href="https://t.me/abdulazizcreator">Abdulaziz</a> and
+              <a href="https://t.me/maruffyuldashev"> Maruf</a>
+            </p>
           </div>
         </div>
       </footer>
