@@ -20,6 +20,7 @@ import Loading from "../comps/Loading";
 import useFetch from "../hooks/useFetch";
 import { sendData } from "../server/common";
 import Comment from "../comps/Comment";
+import CommentTitle from "../comps/CommentTitle";
 const Post = () => {
   let params = useParams();
   const [comment, setComment] = useState({});
@@ -73,7 +74,9 @@ const Post = () => {
                   return (
                     <AccordionItem>
                       <AccordionItemHeading>
-                        <AccordionItemButton>{item.text}</AccordionItemButton>
+                        <AccordionItemButton>
+                          <CommentTitle item={item} />
+                        </AccordionItemButton>
                       </AccordionItemHeading>
                       <Comment
                         item={item}

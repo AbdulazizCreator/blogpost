@@ -8,6 +8,7 @@ import {
 } from "react-accessible-accordion";
 import { Button, Input, InputGroup } from "reactstrap";
 import { sendData } from "../server/common";
+import CommentTitle from "./CommentTitle";
 
 const Comment = ({ item, postId, setChanges }) => {
   const [comment, setComment] = useState({});
@@ -38,7 +39,9 @@ const Comment = ({ item, postId, setChanges }) => {
           {item.children.map((item) => (
             <AccordionItem>
               <AccordionItemHeading>
-                <AccordionItemButton>{item.text}</AccordionItemButton>
+                <AccordionItemButton>
+                  <CommentTitle item={item} />
+                </AccordionItemButton>
               </AccordionItemHeading>
               <Comment item={item} postId={postId} setChanges={setChanges} />
             </AccordionItem>
